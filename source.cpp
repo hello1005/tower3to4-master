@@ -341,6 +341,8 @@ bool isEnd(void);
 void isTouching(int x, int y);
 void puzzleEnd(void);
 
+void useObject(void);
+
 void Turn();
 // casino
 int slotA();
@@ -1916,14 +1918,127 @@ void useObject() {
 	if (getHandObject() == item0) {//sword
 		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
 			playerAtk += 15;
+			hideObject(item0);
 				if (playerAtk > 100) {
 					playerAtk = 100;
 				}
 		}
 	}
+	if (getHandObject() == item1) {//shield
+		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			hideObject(item1);
+			playerDef += 15;
+			if (playerDef > 100) {
+				playerDef = 100;
+			}
+		}
+	}
+	if (getHandObject() == item2) {//axe
+		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			hideObject(item2);
+			playerAtk += 25;
+			if (playerAtk > 100) {
+				playerAtk = 100;
+			}
+		}
+	}
+	if (getHandObject() == item3) {//spear
+		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			hideObject(item3);
+			playerAtk += 15;
+			if (playerAtk > 100) {
+				playerAtk = 100;
+			}
+		}
+	}
 	if (getHandObject() == item4) {//bluePotion
 		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			hideObject(item4);
 			playerHp += 10;
+			checkHp(PLAYER);
+			if (playerHp > 100) {
+				playerHp = 100;
+			}
+		}
+	}
+	if (getHandObject() == item5) {//greenPotion
+		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			playerHp += 20;
+			checkHp(PLAYER);
+			if (playerHp > 100) {
+				playerHp = 100;
+			}
+		}
+	}
+	if (getHandObject() == item6) {//redPotion
+		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			playerHp += 30;
+			checkHp(PLAYER);
+			if (playerHp > 100) {
+				playerHp = 100;
+			}
+		}
+	}
+	if (getHandObject() == item7) {//carrot
+		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			playerAtk += 5;
+			if (playerAtk > 100) {
+				playerAtk = 100;
+			}
+			playerHp += 5;
+			checkHp(PLAYER);
+			if (playerHp > 100) {
+				playerHp = 100;
+			}
+		}
+	}
+	if (getHandObject() == item8) {//mushroom
+		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			playerAtk += 10;
+			if (playerAtk > 100) {
+				playerAtk = 100;
+			}
+			playerHp += 10;
+			checkHp(PLAYER);
+			if (playerHp > 100) {
+				playerHp = 100;
+			}
+		}
+	}
+	if (getHandObject() == item9) {//meat
+		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			playerAtk += 15;
+			if (playerAtk > 100) {
+				playerAtk = 100;
+			}
+			playerHp += 20;
+			checkHp(PLAYER);
+			if (playerHp > 100) {
+				playerHp = 100;
+			}
+		}
+	}
+	if (getHandObject() == item10) {//bluePotion
+		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			playerHp += 10;
+			checkHp(PLAYER);
+			if (playerHp > 100) {
+				playerHp = 100;
+			}
+		}
+	}
+	if (getHandObject() == item11) {//greenPotion
+		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			playerHp += 20;
+			checkHp(PLAYER);
+			if (playerHp > 100) {
+				playerHp = 100;
+			}
+		}
+	}
+	if (getHandObject() == item12) {//redPotion
+		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			playerHp += 30;
 			checkHp(PLAYER);
 			if (playerHp > 100) {
 				playerHp = 100;
