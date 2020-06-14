@@ -77,11 +77,8 @@ ObjectID messageObj;
 
 // Objects about store
 ObjectID item0, item1, item2, item3, item4, item5,item6, item7, item8, item9, item10, item11, item12;
-ObjectID soldOut[10], box[10], price[10], itemBox, storePixel[3], storeRightArrow, storeLeftArrow, storeList1, storeList2, storeList3, storeBackGround, backToTown;
+ObjectID soldOut[10], box[10], price[10], itemBox, storePixel1, storePixel2, storePixel3, storeRightArrow, storeLeftArrow, storeList1, storeList2, storeList3, storeBackGround, backToTown;
 
-//Locations of storePixel
-int storePixelX[3] = { 570, 770, 970 };
-int storeListX[3] = { 530, 660, 790 };
 
 //Check if items are sold or not
 bool soldOuted[11] = { false, false, false, false, false, false, false, false, false, false, false };
@@ -333,7 +330,6 @@ void playerWingMove();
 
 void changeToNight(void);
 void rest(void);
-
 void battle(void);
 void enemyAttack(void);
 void enemyAttack1(void);
@@ -654,12 +650,21 @@ void gameInit() {
 	showObject(storeBackGround);
 
 	//storePixel[3]
-	for (int j = 0; j < 3; j++) {
-		storePixel[j] = createObject("./Images/Items/Store/UI/StorePixel.png");
-		locateObject(storePixel[j], storeScene, storePixelX[j], 192);
-		scaleObject(storePixel[j], 0.5f);
-		showObject(storePixel[j]);
-	}
+	storePixel1 = createObject("./Images/Items/Store/UI/StorePixel.png");
+	locateObject(storePixel1, storeScene, 570, 192);
+	scaleObject(storePixel1, 0.5f);
+	showObject(storePixel1);
+
+	storePixel2 = createObject("./Images/Items/Store/UI/StorePixel.png");
+	locateObject(storePixel2, storeScene, 770, 192);
+	scaleObject(storePixel2, 0.5f);
+	showObject(storePixel2);
+
+	storePixel3 = createObject("./Images/Items/Store/UI/StorePixel.png");
+	locateObject(storePixel3, storeScene, 970, 192);
+	scaleObject(storePixel3, 0.5f);
+	showObject(storePixel3);
+
 
 	//storeArrow
 	storeRightArrow = createObject("./Images/Items/Store/UI/Store_rightarrow.png");
@@ -1907,7 +1912,25 @@ void throwSpear() {
 }
 
 // ========================================================================================================
-
+void useObject() {
+	if (getHandObject() == item0) {//sword
+		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			playerAtk += 15;
+				if (playerAtk > 100) {
+					playerAtk = 100;
+				}
+		}
+	}
+	if (getHandObject() == item4) {//bluePotion
+		if ((currentScene == battle3F_Scene) || (currentScene == battle5F_Scene)) {
+			playerHp += 10;
+			checkHp(PLAYER);
+			if (playerHp > 100) {
+				playerHp = 100;
+			}
+		}
+	}
+}
 
 void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 	if (object == CanNotRestMessage) {
@@ -2041,41 +2064,41 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 		hideObject(miniGameMessage4);
 	}
 	//store
-	else if (currentScene = storeScene) {
-		if (object == backToTown) {
+	
+	else if (object == backToTown) {
 		enterScene(villageScene);
 		currentScene = villageScene;
 		showObject(player);
-		}
-		else if (object == merchant) {
+	}
+	else if (object == merchant) {
 		showMessage("you can buy things to kill monster");
-		}
+	}
 	
-		else if (object == storeList1) {
-			for (int i = 0; i < 3; i++) {
-				showObject(box[i]);
-				if (soldOuted[i] == true) {//if the user bought the item, show "soldOut.png" by determining bool soldOuted[i] 
-					showObject(soldOut[i]);
-				}
-				showObject(price[i]);
+	else if (object == storeList1) {
+		for (int i = 0; i < 3; i++) {
+			showObject(box[i]);
+			if (soldOuted[i] == true) {//if the user bought the item, show "soldOut.png" by determining bool soldOuted[i] 
+				showObject(soldOut[i]);
 			}
-			showObject(item0);
-			showObject(item1);
-			showObject(item2);
-			showObject(storeRightArrow);
-			for (int i = 4; i < 10; i++) {
-				hideObject(soldOut[i]);
-				hideObject(box[i]);
-				hideObject(price[i]);
-			}
-			hideObject(item3);
-			hideObject(item4);
-			hideObject(item5);
-			hideObject(item6);
-			hideObject(item7);
-			hideObject(item8);
-			hideObject(item9);
+			showObject(price[i]);
 		}
+		showObject(item0);
+		showObject(item1);
+		showObject(item2);
+		showObject(storeRightArrow);
+		for (int i = 4; i < 10; i++) {
+			hideObject(soldOut[i]);
+			hideObject(box[i]);
+			hideObject(price[i]);
+		}
+		hideObject(item3);
+		hideObject(item4);
+		hideObject(item5);
+		hideObject(item6);
+		hideObject(item7);
+		hideObject(item8);
+		hideObject(item9);
+		
 	}
 
 	else if (object == storeList2) {
@@ -2084,12 +2107,13 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 			hideObject(box[i]);
 			hideObject(price[i]);
 		}
-		hideObject(item0);
-		hideObject(item1);
-		hideObject(item2);
-		hideObject(item3);
-		hideObject(item8);
-		hideObject(item9);
+			hideObject(item0);
+			hideObject(item1);
+			hideObject(item2);
+			hideObject(item3);
+			hideObject(item7);
+			hideObject(item8);
+			hideObject(item9);
 		for (int i = 7; i < 10; i++) {
 			
 			hideObject(soldOut[i]);
@@ -2103,12 +2127,11 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 			}
 			showObject(price[i]);
 		}
-		showObject(item4);
-		showObject(item5);
-		showObject(item6);
-		showObject(item7);
-		hideObject(storeRightArrow);
-		hideObject(storeLeftArrow);
+			showObject(item4);
+			showObject(item5);
+			showObject(item6);
+			hideObject(storeRightArrow);
+			hideObject(storeLeftArrow);
 	}
 	else if (object == storeList3) {
 		for (int i = 0; i < 8; i++) {
@@ -2116,14 +2139,14 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 			hideObject(box[i]);
 			hideObject(price[i]);
 		}
-		hideObject(item0);
-		hideObject(item1);
-		hideObject(item2);
-		hideObject(item3);
-		hideObject(item4);
-		hideObject(item5);
-		hideObject(item6);
-		hideObject(item7);
+			hideObject(item0);
+			hideObject(item1);
+			hideObject(item2);
+			hideObject(item3);
+			hideObject(item4);
+			hideObject(item5);
+			hideObject(item6);
+			hideObject(item7);
 
 		for (int i = 7; i < 10; i++) {
 			showObject(box[i]);
@@ -2132,11 +2155,11 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 				showObject(soldOut[i]);
 			}
 		}
-		showObject(item7);
-		showObject(item8);
-		showObject(item9);
-		hideObject(storeRightArrow);
-		hideObject(storeLeftArrow);
+			showObject(item7);
+			showObject(item8);
+			showObject(item9);
+			hideObject(storeRightArrow);
+			hideObject(storeLeftArrow);
 
 	}
 	else if (object == storeRightArrow) {
@@ -2145,26 +2168,26 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 			hideObject(box[i]);
 			hideObject(price[i]);
 		}
-		hideObject(item0);
-		hideObject(item1);
-		hideObject(item2);
-		hideObject(storeRightArrow);
-		showObject(item3);
-		showObject(box[3]);
-		showObject(price[3]);
-		if (soldOuted[3] == true) {//if the user bought the item, show "soldOut.png" by determining bool soldOuted[i] 
-			showObject(soldOut[3]);
-		}
-		showObject(storeLeftArrow);
+			hideObject(item0);
+			hideObject(item1);
+			hideObject(item2);
+			hideObject(storeRightArrow);
+			showObject(item3);
+			showObject(box[3]);
+			showObject(price[3]);
+			if (soldOuted[3] == true) {//if the user bought the item, show "soldOut.png" by determining bool soldOuted[i] 
+				showObject(soldOut[3]);
+			}
+			showObject(storeLeftArrow);
 
 	}
 	else if (object == storeLeftArrow) {
-		hideObject(item3);
-		hideObject(box[3]);
-		hideObject(soldOut[3]);
-		hideObject(price[3]);
-		showObject(storeRightArrow);
-		hideObject(storeLeftArrow);
+			hideObject(item3);
+			hideObject(box[3]);
+			hideObject(soldOut[3]);
+			hideObject(price[3]);
+			showObject(storeRightArrow);
+			hideObject(storeLeftArrow);
 		for (int i = 0; i < 3; i++) {
 			showObject(box[i]);
 			showObject(price[i]);
@@ -2172,13 +2195,14 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 				showObject(soldOut[i]);
 			}
 		}
-		showObject(item0);
-		showObject(item1);
-		showObject(item2);
+			showObject(item0);
+			showObject(item1);
+			showObject(item2);
 	}
 	else if (object == item0) {
-
-		if (gold > 10) {
+			
+	
+		if (gold >= 10) {
 			pickObject(item0);
 			gold = gold - 10;
 			showGold();
@@ -2194,7 +2218,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 
 	else if (object == item1) {
 
-		if (gold > 10) {
+		if (gold >= 10) {
 			pickObject(item1);
 			gold = gold - 10;
 			showGold();
@@ -2209,7 +2233,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 
 	else if (object == item2) {
 
-		if (gold > 30) {
+		if (gold >= 30) {
 			pickObject(item2);
 			gold = gold - 30;
 			showGold();
@@ -2227,7 +2251,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 
 	else if (object == item3) {
 
-		if (gold > 50) {
+		if (gold >= 50) {
 			pickObject(item3);
 			gold = gold - 50;
 			showGold();
@@ -2247,7 +2271,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 	}
 	else if (object == item4) {
 
-		if (gold > 10) {
+		if (gold >= 10) {
 			pickObject(item4);
 			gold = gold - 10;
 			showGold();
@@ -2259,7 +2283,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 		}
 	}
 	else if (object == item10) {
-		if (gold > 10) {
+		if (gold >= 10) {
 			pickObject(item10);
 			gold = gold - 10;
 			showGold();
@@ -2272,7 +2296,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 		}
 	}
 	else if (object == item7) {
-		if (gold > 15) {
+		if (gold >=15) {
 			pickObject(item7);
 			gold = gold - 15;
 			showGold();
@@ -2286,7 +2310,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 	}
 
 	else if (object == item5) {
-		if (gold > 20) {
+		if (gold >=20) {
 			pickObject(item5);
 			gold = gold - 20;
 			showGold();
@@ -2299,7 +2323,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 	}
 
 	else if (object == item11) {
-		if (gold > 20) {
+		if (gold >= 20) {
 			pickObject(item11);
 			gold = gold - 20;
 			showGold();
@@ -2313,7 +2337,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 	}
 
 	else if (object == item6) {
-		if (gold > 30) {
+		if (gold >=30) {
 			pickObject(item6);
 			gold = gold - 30;
 			showGold();
@@ -2325,7 +2349,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 		}
 	}
 	else if (object == item12) {
-		if (gold > 30) {
+		if (gold >= 30) {
 			pickObject(item12);
 			gold = gold - 30;
 			showGold();
@@ -2338,7 +2362,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 		}
 	}
 	else if (object == item8) {
-		if (gold > 25) {
+		if (gold >= 25) {
 			pickObject(item8);
 			gold = gold - 25;
 			showGold();
@@ -2352,7 +2376,7 @@ void mouseCallback(ObjectID object, int x, int y, MouseAction action) {
 	}
 
 	else if (object == item9) {
-		if (gold > 30) {
+		if (gold >= 30) {
 			pickObject(item9);
 			gold = gold - 30;
 			showGold();
@@ -2718,6 +2742,7 @@ void timerCallback(TimerID timer) {
 
 	//=======================================================================================
 }
+
 
 void keyboardCallback(KeyCode code, KeyState state) {
 	// Processing a keyboard input.
